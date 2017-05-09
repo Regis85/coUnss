@@ -40,14 +40,13 @@ public class Preference {
 		System.out.println("Dossier de travail → " + dossierTravail);
 		
 		File monFichier = new File(fichierPref);
-		if(monFichier.exists())
+		if(!monFichier.exists())
 		{
-			System.out.println("Le fichier " + fichierPref + " existe");
-		}  
-		else {
-			System.out.println("Le fichier " + fichierPref + " n'existe pas");
+			System.out.println("Le fichier " + fichierPref + " n'existe pas, on le crée");
 			creePref();
 		}
+		System.out.println("Lecture de " + fichierPref);
+		litPref();
 		
 	}
 	
@@ -86,8 +85,6 @@ public class Preference {
 	        Element lycee = doc.createElement("categorie");
 	        lycee.setTextContent("Lycées");
 	        categories.appendChild(lycee);
-	    	        
-	        
 	        
 	        // write the content into xml file
 	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -99,16 +96,16 @@ public class Preference {
 	        
 	        DOMSource source = new DOMSource(doc);
 	        StreamResult resultat = new StreamResult(new File(fichierPref));
-	        
-	        
 	 
 	        transformer.transform(source, resultat);
 	 
 	        System.out.println("Fichier sauvegardé avec succès!");
 
 		} catch (ParserConfigurationException pce) {
+			System.out.println("Erreur de configuration");
 			pce.printStackTrace();
 		} catch (TransformerException tfe) {
+			System.out.println("Erreur lors de l'export du fichier");
 			tfe.printStackTrace();
 		}
 	}
@@ -143,10 +140,13 @@ public class Preference {
 			} catch (SAXParseException e) {} 
 	           
 		} catch (ParserConfigurationException e) {
+			System.out.println("Erreur de configuration");
 			e.printStackTrace();
 		} catch (SAXException e) {
+			System.out.println("Erreur de validation du fichier xml");
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("Erreur de lecture");
 			e.printStackTrace();
 		}  
 		

@@ -3,6 +3,9 @@ package coUnss;
 import java.util.Vector;
 
 import affichage.Fenetre;
+
+
+
 //import parcours.*;
 //import equipes.*;
 
@@ -14,7 +17,7 @@ public class Main {
 		
 		preferences = new Preference();
 		
-		Fenetre fen = new Fenetre();
+		Fenetre fen = new Fenetre(); 
 /**
 		Competition course = new Competition("Académiques de CO - 2017");
 		// System.out.println(course.getNom());

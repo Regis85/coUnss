@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
-    <element name="port" type="string"></element>
-    <element name="preference" type="string"></element>
     
-    <xs:element name="categorie">
-   		<xs:complexType>
-   			<xs:sequence>
-				<xs:element name="nomLong" type="xs:string" >
-				<xs:element name="nomCourt" type="xs:string" >
-          </xs:sequence>
-       </xs:complexType>
-   </xs:element>
+    <xs:element name="categorie" type="xs:string" />
    
     <xs:element name="categories">
    		<xs:complexType>
-   			<xs:element ref="categorie" minOccurs="1" maxOccurs="unbounded" />
+   			<xs:sequence>
+   				<xs:element ref="categorie" minOccurs="1" maxOccurs="unbounded" />
+       	</xs:sequence>
        </xs:complexType>
    </xs:element>
     
-    
-    <xs:element name="preference">
+    <xs:element name="config">
    		<xs:complexType>
    			<xs:sequence>
-   				<xs:element name="nom" type="xs:string" >
-   				<xs:element name="port" type="xs:string" >
-   				<xs:element name="dossier" type="xs:string" >
-   				<xs:element ref="categorie" minOccurs="0" />
+   				<xs:element name="nom" type="xs:string" />
+   				<xs:element name="port" type="xs:string" />
+   				<xs:element name="dossier" type="xs:string" />
+   				<xs:element ref="categories" minOccurs="0" />
           </xs:sequence>
        </xs:complexType>
    </xs:element>
        
-</schema>
+</xs:schema>
