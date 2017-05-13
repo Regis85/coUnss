@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,12 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,7 +26,7 @@ import org.w3c.dom.NodeList;
 
 import affichage.MonBouton;
 
-public class PrefDialogue extends JDialog {
+public class PrefDialogue extends JDialog implements SaveConfig {
 	
 	private JTextField textNom = new JTextField();
 	
@@ -320,26 +313,7 @@ public class PrefDialogue extends JDialog {
          
         ;}
 		
-        try {
-        // write the content into xml file
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        
-        DOMSource source = new DOMSource(config);
-        StreamResult resultat = new StreamResult(new File("config.xml"));
- 
-        transformer.transform(source, resultat);
- 
-        System.out.println("Fichier sauvegardé avec succès!");
-
-	} catch (TransformerException tfe) {
-		System.out.println("Erreur lors de l'export du fichier");
-		tfe.printStackTrace();
-	}
-
+            enregistreConfig(config);
 
 		
 		setVisible(false);

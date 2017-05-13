@@ -3,40 +3,28 @@ package coUnss;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFileChooser;
-import javax.xml.XMLConstants;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import dialogues.SaveConfig;
 
 
 
 
 
-public class Preference {
+
+public class Preference implements SaveConfig {
 	
 	private String dossierTravail;
 	private String fichierPref = "config.xml";
@@ -121,48 +109,11 @@ public class Preference {
 	        nomCourtLycee.setTextContent("LYC");
 	        lycee.appendChild(nomCourtLycee);
 
-	        try {
-
-	        	SchemaFactory fabrique = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-	        	//fabrique.setErrorHandler(new GestionnaireErreurs());
-
-	        	InputSource sourceEntree = new InputSource("config.xsd");
-	        	SAXSource sourceXSD = new SAXSource(sourceEntree);
-
-	        	Schema schema = fabrique.newSchema(sourceXSD);
-	        	Validator validateur = schema.newValidator();
-
-	        	validateur.validate(new DOMSource(doc));
-			      
-			 } 
-			 catch (SAXException e) {
-				 e.printStackTrace();
-			 }
-		 	catch (IOException e) {
-		 		e.printStackTrace();
-		 	}	        
-	        
-	        // write the content into xml file
-	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-	        //transformerFactory.setAttribute("indent-number", new Integer(2));
-	        
-	        Transformer transformer = transformerFactory.newTransformer();
-	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-	        
-	        DOMSource source = new DOMSource(doc);
-	        StreamResult resultat = new StreamResult(new File(fichierPref));
-	 
-	        transformer.transform(source, resultat);
-	 
-	        System.out.println("Fichier sauvegardé avec succès!");
+            enregistreConfig(doc);
 
 		} catch (ParserConfigurationException pce) {
 			System.out.println("Erreur de configuration");
 			pce.printStackTrace();
-		} catch (TransformerException tfe) {
-			System.out.println("Erreur lors de l'export du fichier");
-			tfe.printStackTrace();
 		}
 	}
 	
