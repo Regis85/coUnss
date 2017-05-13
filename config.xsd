@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     
-    <xs:element name="categorie" type="xs:string" />
+   <xs:element name="categorie">
+    	<xs:complexType>
+   			<xs:sequence>
+   				<xs:element name="nomLong" type="xs:string" />
+   				<xs:element name="nomCourt" type="xs:string" />
+       		</xs:sequence>
+		</xs:complexType>
+   </xs:element>
    
     <xs:element name="categories">
    		<xs:complexType>
    			<xs:sequence>
    				<xs:element ref="categorie" minOccurs="1" maxOccurs="unbounded" />
-       	</xs:sequence>
+       		</xs:sequence>
+       </xs:complexType>
+   </xs:element>
+   
+   <xs:element name="bonif" type="xs:string" />
+   <xs:element name="points" type="xs:integer" />
+   <xs:element name="temps" type="xs:integer" />
+   
+   <xs:element name="trouvee">
+   		<xs:complexType>
+   			<xs:sequence>
+   				<xs:element ref="bonif" />
+   				<xs:element ref="points" />
+   				<xs:element ref="temps" />
+       		</xs:sequence>
+       </xs:complexType>
+   </xs:element>
+   
+   <xs:element name="pm" >
+   		<xs:complexType>
+   			<xs:sequence>
+   				<xs:element ref="bonif" />
+   				<xs:element ref="points" />
+   				<xs:element ref="temps" />
+       		</xs:sequence>
        </xs:complexType>
    </xs:element>
     
@@ -17,7 +48,10 @@
    				<xs:element name="nom" type="xs:string" />
    				<xs:element name="port" type="xs:string" />
    				<xs:element name="dossier" type="xs:string" />
+   				<xs:element name="sauvegarde" type="xs:string" />
    				<xs:element ref="categories" minOccurs="0" />
+   				<xs:element ref="trouvee" minOccurs="0" />
+   				<xs:element ref="pm" minOccurs="0" />
           </xs:sequence>
        </xs:complexType>
    </xs:element>

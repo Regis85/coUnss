@@ -5,23 +5,35 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.xml.XMLConstants;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+
+
+
 
 
 public class Preference {
@@ -29,6 +41,12 @@ public class Preference {
 	private String dossierTravail;
 	private String fichierPref = "config.xml";
 	private String fichierPrefXsd = "config.xsd";
+	
+	private Document xml = null;
+	private NodeList nomList;
+	
+	private String nomAS  = "Nom de l'association";
+	private String portCom;
 	
 	public Preference() {
 		
@@ -63,28 +81,66 @@ public class Preference {
 
 	        // élément nom
 	        Element nom = doc.createElement("nom");
-	        nom.setTextContent("Course d'Orienation");
+	        nom.setTextContent(nomAS);
 	        racine.appendChild(nom);
 
 	        // élément port
 	        Element port = doc.createElement("port");
-	        port.setTextContent("COM9");
+	        port.setTextContent("");
 	        racine.appendChild(port);
 
 	        // élément dossier
 	        Element dossier = doc.createElement("dossier");
 	        dossier.setTextContent(System.getProperty("user.dir"));
 	        racine.appendChild(dossier);
+
+	        // élément sauvegarde
+	        Element dossierSauvegarde = doc.createElement("sauvegarde");
+	        dossierSauvegarde.setTextContent(System.getProperty("user.dir")+"/sauvegarde");
+	        racine.appendChild(dossierSauvegarde);
 	        
 	        // créer collège et lycée
 	        Element categories = doc.createElement("categories");
 	        racine.appendChild(categories);
-	        Element Colleges = doc.createElement("categorie");
-	        Colleges.setTextContent("Collèges");
-	        categories.appendChild(Colleges);
+	        
+	        Element colleges = doc.createElement("categorie");
+	        categories.appendChild(colleges);
+	        Element nomLongCollege = doc.createElement("nomLong");
+	        nomLongCollege.setTextContent("Collèges");
+	        colleges.appendChild(nomLongCollege);
+	        Element nomCourtCollege = doc.createElement("nomCourt");
+	        nomCourtCollege.setTextContent("COL");
+	        colleges.appendChild(nomCourtCollege);
+	        
 	        Element lycee = doc.createElement("categorie");
-	        lycee.setTextContent("Lycées");
 	        categories.appendChild(lycee);
+	        Element nomLongLycee = doc.createElement("nomLong");
+	        nomLongLycee.setTextContent("Lycées");
+	        lycee.appendChild(nomLongLycee);
+	        Element nomCourtLycee = doc.createElement("nomCourt");
+	        nomCourtLycee.setTextContent("LYC");
+	        lycee.appendChild(nomCourtLycee);
+
+	        try {
+
+	        	SchemaFactory fabrique = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+	        	//fabrique.setErrorHandler(new GestionnaireErreurs());
+
+	        	InputSource sourceEntree = new InputSource("config.xsd");
+	        	SAXSource sourceXSD = new SAXSource(sourceEntree);
+
+	        	Schema schema = fabrique.newSchema(sourceXSD);
+	        	Validator validateur = schema.newValidator();
+
+	        	validateur.validate(new DOMSource(doc));
+			      
+			 } 
+			 catch (SAXException e) {
+				 e.printStackTrace();
+			 }
+		 	catch (IOException e) {
+		 		e.printStackTrace();
+		 	}	        
 	        
 	        // write the content into xml file
 	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -134,7 +190,7 @@ public class Preference {
 	         
 			//On rajoute un bloc de capture pour intercepter les erreurs au cas où il y en ait
 			try {
-				Document xml = builder.parse(fileXML);
+				xml = builder.parse(fileXML);
 				Element root = xml.getDocumentElement();
 				System.out.println(root.getNodeName());
 			} catch (SAXParseException e) {} 
@@ -148,12 +204,24 @@ public class Preference {
 		} catch (IOException e) {
 			System.out.println("Erreur de lecture");
 			e.printStackTrace();
-		}  
+		}
 		
-		
+		NodeList nomList = xml.getElementsByTagName("nom");
+		nomAS = nomList.item(0).getTextContent();
+		portCom = xml.getElementsByTagName("port").item(0).getTextContent();
 		
 	}
-	   
+	
+	public Document getConfig() {
+		return this.xml;
+	}
+
+	public String getNomAS() {
+		return this.nomAS;
+	}
+	public String getPortCom() {
+		return this.portCom;
+	}
 	
 	
 	

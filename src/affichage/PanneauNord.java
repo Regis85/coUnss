@@ -44,11 +44,7 @@ public class PanneauNord extends JPanel {
 	private MonBouton btnConnecteStation = new MonBouton("icones/stopOrange-32.png", "Recherche de la station mère");
 	private MonBouton btnCherchePuce = new MonBouton("icones/stopRed-32.png", "Lecture des puces");
     
-/*
-	public PanneauNord() {
-		
-	}
-	*/
+
 	public PanneauNord(PanneauOuest panWest ) {
 
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));

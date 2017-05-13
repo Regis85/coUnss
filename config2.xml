@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+    <nom>Nom de l'association</nom>
+    <port>/home/bouguin/workspace2/coUnss/sauvegarde</port>
+    <dossier>/home/bouguin/workspace2/coUnss</dossier>
+    <sauvegarde>/home/bouguin/workspace2/coUnss/sauvegarde</sauvegarde>
+    <categories>
+        <categorie>
+            <nomLong>Collèges</nomLong>
+            <nomCourt>COL</nomCourt>
+        </categorie>
+        <categorie>
+            <nomLong>Lycées</nomLong>
+            <nomCourt>LYC</nomCourt>
+        </categorie>
+    </categories>
+</config>

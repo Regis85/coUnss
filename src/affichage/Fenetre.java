@@ -27,6 +27,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import coUnss.Fichier;
+import dialogues.PrefDialogue;
 
 public class Fenetre extends JFrame {
 	
@@ -155,8 +156,15 @@ public class Fenetre extends JFrame {
 		
 		// Menu Préférence
 		parametres.setIcon(new ImageIcon("icones/preferences.png"));
+		parametres.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				//saisiePref();
+				System.out.println("affichage de la boite de dialogue de saisie des préférences");
+				PrefDialogue saisiePref1 = new PrefDialogue(null, "Paramètres généraux", true);
+			}
+		});	
 		preference.setIcon(new ImageIcon("icones/preferences.png"));
-		preference.add(parametres);		
+		preference.add(parametres);
 		menuBar.add(preference);
 		
 		// Menu Aide
@@ -174,6 +182,11 @@ public class Fenetre extends JFrame {
 		    });
 		help.add(licence);
 		menuBar.add(help);
+	}
+
+	private void saisiePref() {
+		System.out.println("affichage de la boite de dialogue de saisie des préférences");
+		PrefDialogue saisiePref = new PrefDialogue(null, "Coucou les ZérOs", true);
 	}
 
 	private void quitter() {
