@@ -12,15 +12,21 @@
  * You should have received a copy of the GNU General Public License along with Foobar.  If not, see <http://www.gnu.org/licenses/>
  * 
  */
+package lib;
 
-package affichage;
+import java.awt.Component;
 
-public class Main {
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
-	public static void main(String[] args) {
-		
-		Fenetre fen = new Fenetre();
-
-	}
-
+public class XTableRenderer extends DefaultTableCellRenderer {
+	
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) 
+		{ 
+			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			this.setHorizontalAlignment(JLabel.CENTER);
+			return this; 
+		} 
+			 
 }

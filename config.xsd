@@ -6,6 +6,9 @@
    			<xs:sequence>
    				<xs:element name="nomLong" type="xs:string" />
    				<xs:element name="nomCourt" type="xs:string" />
+   				<xs:element name="coureurs" type="xs:integer" minOccurs="0" />
+   				<xs:element name="filles" type="xs:integer" minOccurs="0" />
+   				<xs:element name="garcons" type="xs:integer" minOccurs="0" />
        		</xs:sequence>
 		</xs:complexType>
    </xs:element>
