@@ -25,6 +25,10 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import geCoUnss.Fichier;
+import geCoUnss.Preference;
+import lib.MonBouton;
+
 
 public class PanneauNord extends JPanel {
 	
@@ -112,6 +116,8 @@ public class PanneauNord extends JPanel {
 	    bgNord2.setBorder(cadreHeure);
 	    
 	    jcbHrDepart.addActionListener(new HrDepartListener());
+	    //if (new Fichier().getHeureZero())
+	    jcbHrDepart.setSelectedItem(heureDebut);
 	    JLabel lbHDepart = new JLabel("h");
 	    jcbMnDepart.addActionListener(new MnDepartListener());
 	    JLabel lbMnDepart = new JLabel("mn");
@@ -165,7 +171,16 @@ public class PanneauNord extends JPanel {
 	public void activeBtnPuce(boolean actif) {
 		btnLirePuce.setEnabled(actif);
 	}
-
+	
+	public void setHeureDebut(int hd) {
+		heureDebut = hd;
+		jcbHrDepart.setSelectedItem(heureDebut);
+	}
+	
+	public void setMinuteDebut(int md) {
+		minuteDebut = md;
+		jcbMnDepart.setSelectedItem(minuteDebut);
+	}
 
 	class TpsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -174,7 +189,7 @@ public class PanneauNord extends JPanel {
 		}
 	}
 	
-	class HrDepartListener implements ActionListener {
+	class HrDepartListener implements ActionListener { 
 		public void actionPerformed(ActionEvent e) {
 			heureDebut = Integer.parseInt(jcbHrDepart.getSelectedItem().toString());
 			System.out.println("Heure de début de la course " + heureDebut + ":" + minuteDebut);
@@ -187,6 +202,7 @@ public class PanneauNord extends JPanel {
 			System.out.println("Heure de début de la course " + heureDebut + ":" + minuteDebut);
 		}
 	}
+	
 	
 	
 }

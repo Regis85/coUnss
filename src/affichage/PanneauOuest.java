@@ -28,13 +28,15 @@ import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import lib.MonBouton;
+
 
 public class PanneauOuest extends JPanel {
 	
 	private PanneauNord panNord = null;
 	
 	private JPanel equipes = new JPanel();
-	int nbEquipes = 50;
+	int nbEquipes;
 	
 	private MonBouton btnLirePuce = new MonBouton("icones/lance-32.png", "Connecter la station mère");
 	private MonBouton btnConnecteStation = new MonBouton("icones/stopOrange-32.png", "Recherche de la station mère");
@@ -50,6 +52,7 @@ public class PanneauOuest extends JPanel {
 		// début de la première ligne
 		JPanel panBoutons = new JPanel();
 		
+		nbEquipes = compteEquipes();
 		JLabel lbEquipes = new JLabel(nbEquipes + " Équipes : ");
 		panBoutons.add(lbEquipes);
 
@@ -152,18 +155,18 @@ public class PanneauOuest extends JPanel {
 		
 		equipes.setBackground(Color.WHITE);
 		
-		equipes.add(new JLabel(Integer.toString(nbEquipes) + " équipes"));
+		//equipes.add(new JLabel(Integer.toString(nbEquipes) + " équipes"));
 		
 		equipes.setLayout(new BoxLayout(equipes, BoxLayout.PAGE_AXIS));
 		
 		JScrollPane fenEquipes = new JScrollPane(equipes);
 		this.add(fenEquipes, BorderLayout.CENTER);
-		
+		/*
 		int iMax = nbEquipes;
 		for(int i=0;i<=iMax;i++){
 			equipes.add(new JLabel("Équipe " + i));
 		}
-		
+		*/
 		fenEquipes.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		
 	}
@@ -174,6 +177,10 @@ public class PanneauOuest extends JPanel {
 	
 	public void addPanneauNord(PanneauNord panoNord) {
 		panNord = panoNord;
+	}
+	
+	public int compteEquipes() {
+		return 0;
 	}
 
 }

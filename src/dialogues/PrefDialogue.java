@@ -44,10 +44,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import affichage.MonBouton;
+import lib.MonBouton;
+import lib.SaveFichierXML;
 import lib.XTableRenderer;
 
-public class PrefDialogue extends JDialog implements SaveConfig {
+public class PrefDialogue extends JDialog implements SaveFichierXML {
 	
 	private JTextField textNom = new JTextField();
 	
@@ -84,12 +85,12 @@ public class PrefDialogue extends JDialog implements SaveConfig {
 		containerHaut.setLayout(new BoxLayout(containerHaut, BoxLayout.PAGE_AXIS));
 		//container.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		config = new coUnss.Preference().getConfig(); //le xml sous la forme Document
+		config = new geCoUnss.Preference().getConfig(); //le xml sous la forme Document
 		
 		/*----- nom de l'association -----*/
 		JPanel panNom = new JPanel();
 		panNom.setLayout(new FlowLayout(FlowLayout.LEFT));
-		textNom = new JTextField(new coUnss.Preference().getNomAS());
+		textNom = new JTextField(new geCoUnss.Preference().getNomAS());
 		textNom.setColumns(20);
 		panNom.add(new JLabel("Nom de l'association :"));
 		panNom.add(textNom);
@@ -412,7 +413,7 @@ public class PrefDialogue extends JDialog implements SaveConfig {
 			listeCategories.add(i,l);			
 		}
 		
-            enregistreConfig(config);
+		enregistreFichier(config, "config.xsd", "config.xml");
 		
 		setVisible(false);
 	}

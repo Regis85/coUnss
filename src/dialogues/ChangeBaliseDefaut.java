@@ -36,9 +36,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import affichage.JComboNombre;
-import affichage.MonBouton;
+import lib.MonBouton;
+import lib.SaveFichierXML;
 
-public class ChangeBaliseDefaut extends JDialog implements SaveConfig {
+public class ChangeBaliseDefaut extends JDialog implements SaveFichierXML {
 
 	private Document balise;
 	
@@ -222,7 +223,7 @@ public class ChangeBaliseDefaut extends JDialog implements SaveConfig {
 	}
 	
 	private void getBaliseDefaut() {
-		 this.balise = new coUnss.Preference().getConfig();
+		 this.balise = new geCoUnss.Preference().getConfig();
 	}
 
 	private void saveData() throws TransformerException {
@@ -341,7 +342,7 @@ public class ChangeBaliseDefaut extends JDialog implements SaveConfig {
 		
 		parcoursDom(balise);
 		
-        enregistreConfig(balise);
+		enregistreFichier(balise, "config.xsd", "config.xml");
 		
 		
 

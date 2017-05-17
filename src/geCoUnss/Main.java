@@ -13,7 +13,7 @@
  * 
  */
 
-package coUnss;
+package geCoUnss;
 
 
 import java.util.Vector;
@@ -31,7 +31,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		preferences = new Preference();
+		//preferences = new Preference();
 		
 		Fenetre fen = new Fenetre(); 
 /**

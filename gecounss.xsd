@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="version" type="xs:string" />
+	
+	<xs:element name="nom" type="xs:string" />
+	
+	<xs:element name="entete" type="xs:string" />
+	
+	<xs:element name="piedPage" type="xs:string" />
+	
+	<xs:element name="hzh" type="xs:integer" />
+	
+	<xs:element name="hzm" type="xs:integer" />
+	
+	<xs:element name="categorie">
+    	<xs:complexType>
+   			<xs:sequence>
+   				<xs:element name="nomLong" type="xs:string" />
+   				<xs:element name="nomCourt" type="xs:string" />
+   				<xs:element name="coureurs" type="xs:integer" minOccurs="0" />
+   				<xs:element name="filles" type="xs:integer" minOccurs="0" />
+   				<xs:element name="garcons" type="xs:integer" minOccurs="0" />
+       		</xs:sequence>
+		</xs:complexType>
+   </xs:element>
+	
+	<xs:element name="categories">
+   		<xs:complexType>
+   			<xs:sequence>
+   				<xs:element ref="categorie" minOccurs="1" maxOccurs="unbounded" />
+       		</xs:sequence>
+       </xs:complexType>
+   </xs:element>
+	
+	<xs:element name="geCO_unss">
+   		<xs:complexType>
+   			<xs:sequence>
+			<xs:element ref="version" />
+			<xs:element ref="nom" />
+			<xs:element ref="entete" />
+			<xs:element ref="piedPage" />
+			<xs:element ref="hzh" />
+			<xs:element ref="hzm" />
+			<xs:element ref="categories" minOccurs="0" />
+       		</xs:sequence>
+       </xs:complexType>
+	</xs:element>
+</xs:schema>

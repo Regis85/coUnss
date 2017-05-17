@@ -13,7 +13,7 @@
  * 
  */
 
-package affichage;
+package lib;
 
 
 

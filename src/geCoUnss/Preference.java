@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with Foobar.  If not, see <http://www.gnu.org/licenses/>
  * 
  */
-package coUnss;
+package geCoUnss;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,21 +31,16 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import dialogues.SaveConfig;
+import lib.SaveFichierXML;
+import lib.SimpleErrorHandler;
 
-
-
-
-
-
-public class Preference implements SaveConfig {
+public class Preference implements SaveFichierXML {
 	
 	private String dossierTravail;
 	private String fichierPref = "config.xml";
 	private String fichierPrefXsd = "config.xsd";
 	
 	private Document xml = null;
-	private NodeList nomList;
 	
 	private String nomAS  = "Nom de l'association";
 	private String portCom;
@@ -123,7 +118,7 @@ public class Preference implements SaveConfig {
 	        nomCourtLycee.setTextContent("LYC");
 	        lycee.appendChild(nomCourtLycee);
 
-            enregistreConfig(doc);
+	        enregistreFichier(doc, "config.xsd", "config.xml");
 
 		} catch (ParserConfigurationException pce) {
 			System.out.println("Erreur de configuration");
@@ -184,8 +179,14 @@ public class Preference implements SaveConfig {
 	public String getNomAS() {
 		return this.nomAS;
 	}
+	
 	public String getPortCom() {
 		return this.portCom;
+	}
+	
+	public String getDossier() {
+		String retour = xml.getElementsByTagName("dossier").item(0).getTextContent();
+		return retour;
 	}
 	
 	

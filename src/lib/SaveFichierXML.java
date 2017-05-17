@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with Foobar.  If not, see <http://www.gnu.org/licenses/>
  * 
  */
-package dialogues;
+package lib;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,9 +33,9 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public interface SaveConfig {
+public interface SaveFichierXML {
 	
-	public default void enregistreConfig(Document dom) {
+	public default void enregistreFichier(Document dom, String fichierXSD, String fichierXML) {
 		
         try {
 
@@ -43,7 +43,7 @@ public interface SaveConfig {
         	
         	 try {
  	        	SchemaFactory fabrique = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
- 	        	InputSource sourceEntree = new InputSource("config.xsd");
+ 	        	InputSource sourceEntree = new InputSource(fichierXSD);
  	        	SAXSource sourceXSD = new SAXSource(sourceEntree);
 
  	        	Schema schema = fabrique.newSchema(sourceXSD);
@@ -69,14 +69,14 @@ public interface SaveConfig {
 	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 	        
 	        //DOMSource source = new DOMSource(dom);
-	        StreamResult resultat = new StreamResult(new File("config.xml"));
+	        StreamResult resultat = new StreamResult(new File(fichierXML));
 	 
 	        transformer.transform(source, resultat);
 	 
-	        System.out.println("SaveConfig → Fichier config.xml sauvegardé avec succès!");
+	        System.out.println("Fichier " + fichierXML + " sauvegardé avec succès!");
 	
 		} catch (TransformerException tfe) {
-			System.out.println("SaveConfig → Erreur lors de l'export vers le fichier config.xml");
+			System.out.println("Erreur lors de l'export vers le fichier " + fichierXML);
 			tfe.printStackTrace();
 		}
 

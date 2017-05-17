@@ -32,6 +32,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import lib.MonBouton;
+
 public class PanneauCentre extends JPanel {
 
 	private JPanel pnCentreHaut = new JPanel();
@@ -190,14 +192,17 @@ public class PanneauCentre extends JPanel {
 				
 		JPanel pnEpreuvecentre = new JPanel();
 		pnEpreuvecentre.setLayout(new BoxLayout(pnEpreuvecentre, BoxLayout.PAGE_AXIS));
-		pnEpreuvecentre.add(new JLabel("Boite centrale"));
+		//pnEpreuvecentre.add(new JLabel("Boite centrale"));
 		pnEpreuvecentre.setBackground(Color.WHITE);
 		JScrollPane fenEpreuves = new JScrollPane(pnEpreuvecentre);
 		fenEpreuves.setPreferredSize(new Dimension(260,80));
+		chargeEpreuves();
+		/*
 		int iMax = 15;
 		for(int i=0;i<=iMax;i++){
 			pnEpreuvecentre.add(new JLabel("Épreuve " + i));
 		}
+		*/
 		
 		pnEpreuveContenu.add(fenEpreuves);
 		
@@ -325,16 +330,20 @@ public class PanneauCentre extends JPanel {
 	}
 	
 	private void chargeRencontre() {
+		/*
 		listeRencontre.addElement("Championnat départemental");
 		listeRencontre.addElement("Championnat académique");
+		*/
 	}
 	private void selectionneRencontre(int i) {
-		jcbCompetition.setSelectedIndex(i);
+		//jcbCompetition.setSelectedIndex(i);
 	}
 	
 	private void chargeCategorie() {
+		/*
 		listeCategorie.addElement("Collège");
 		listeCategorie.addElement("Lycée");
+		*/
 	}
 	
 	private void chargeEpreuves() {
@@ -342,7 +351,7 @@ public class PanneauCentre extends JPanel {
 	}
 
 	private void selectionneCategorie(int i) {
-		jcbCategories.setSelectedIndex(i);
+		//jcbCategories.setSelectedIndex(i);
 	}
 	
 	private void ajouteBalise(int nbBalisesAjout) {
@@ -353,9 +362,11 @@ public class PanneauCentre extends JPanel {
 	
 	private void chargeBalise() {
 		System.out.println("On charge les balises");
+		/*
 		for(int i=1;i<=30;i++) {
 			this.pnDescriptionBalise.add(new JLabel("Balises " + i));
 		}
+		*/
 	}
 	
 }

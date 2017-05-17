@@ -20,14 +20,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import coUnss.Fichier;
 import dialogues.PrefDialogue;
+import geCoUnss.Fichier;
+import geCoUnss.Preference;
 
 public class Fenetre extends JFrame {
 	
@@ -64,11 +66,13 @@ public class Fenetre extends JFrame {
 	private PanneauCentre parcours = new PanneauCentre();
 	private PanneauSud panSud = new PanneauSud();
 
-	private Fichier donneesCourse = new Fichier();
+	private Fichier donneesCourse;
+	private String chemin;
+	private String cheminDossier;
 	
 	public Fenetre() {		
 		
-		this.setTitle("Course d'orientation UNSS 2");
+		this.setTitle("Course d'orientation UNSS");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -90,6 +94,10 @@ public class Fenetre extends JFrame {
 		container.add(parcours, BorderLayout.CENTER);
 		container.add(panSud, BorderLayout.SOUTH);
 		
+		if(chemin == null) {
+			cheminDossier = new Preference().getDossier();
+		}
+		
 		this.setVisible(true); 
 		
 	}
@@ -97,23 +105,44 @@ public class Fenetre extends JFrame {
 	private void initMenu() {
 	    //Menu Fichier
 		java.net.URL imageURL = this.getClass().getResource("nouveau.gif");
-		System.out.println(imageURL);
+		//System.out.println(imageURL);
 		
 		nouvelle.setIcon(new ImageIcon("icones/nouveau.png"));
 		nouvelle.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent event){
 		    	  donneesCourse = new Fichier();
+		    	  chemin = donneesCourse.getChemin();
 		      }
 		    });
 		fichier.add(nouvelle);
 		
-		ouvrir.setIcon(new ImageIcon("icones/ouvrir.png"));
+		ouvrir.setIcon(new ImageIcon("icones/ouvrir.png"));			 
+		ouvrir.addActionListener(new ActionListener(){
+			      public void actionPerformed(ActionEvent event){
+			    	  System.out.println(chemin + " Ouverture du fichier ");
+			    	  JFileChooser filechoose = new JFileChooser(cheminDossier);
+			  		//filechoose.setCurrentDirectory(new File("."));  /* ouvrir la boite de dialogue dans répertoire courant */
+			  		filechoose.setDialogTitle("Ouvrir un fichier"); /* nom de la boite de dialogue */
+			  		String approve = new String("Ouvrir"); /* Le bouton pour valider l’enregistrement portera la mention Enregistrer */
+					int resultatEnregistrer = filechoose.showDialog(filechoose, approve); 
+					
+					if (resultatEnregistrer == JFileChooser.APPROVE_OPTION){ /* Si l’utilisateur clique sur le bouton Enregistrer */
+						String chemin = filechoose.getSelectedFile().getAbsolutePath(); /* pour avoir le chemin absolu */
+					    /* ici il faut appeler une méthode pour écrire dans un fichier*/
+						System.out.println("Ouverture de chemin " + chemin);
+						donneesCourse = new Fichier(chemin);
+				    	chemin = donneesCourse.getChemin();
+				    	mettreAJour();
+					}	
+		    	  
+		      }
+		    });
 		fichier.add(ouvrir);
 		
 		enregistre.setIcon(new ImageIcon("icones/save.png"));
 		enregistre.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent event){
-		    	  donneesCourse.enregistrerFichier();
+		    	  //donneesCourse.enregistreFichier();
 		      }
 		    });
 		fichier.add(enregistre);
@@ -171,7 +200,7 @@ public class Fenetre extends JFrame {
 		help.add(aide);
 		aPropos.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent event){
-		    	  APropos fenHelp = new APropos();
+		    	  new APropos();
 		      }
 		    });
 		help.add(aPropos);
@@ -184,15 +213,18 @@ public class Fenetre extends JFrame {
 		menuBar.add(help);
 	}
 
-	private void saisiePref() {
-		System.out.println("affichage de la boite de dialogue de saisie des préférences");
-		PrefDialogue saisiePref = new PrefDialogue(null, "Coucou les ZérOs", true);
-	}
-
 	private void quitter() {
 		System.exit(0);
 	}
 	
-	/* mettre tout ça dans la classe du fichier */
+	private void mettreAJour() {
+		panNord.setHeureDebut(donneesCourse.getHeureZero());
+		panNord.setMinuteDebut(donneesCourse.getMinuteZero());
+		
+		this.setTitle("Course d'orientation UNSS - " + donneesCourse.getNom());
+		this.repaint();
+		//this.revalidate();
+		//System.out.println("mettre à jour ");
+	}
 
 }
